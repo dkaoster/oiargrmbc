@@ -6,7 +6,6 @@
     "dev": "sapper dev",
     "build": "sapper build --legacy",
     "export": "sapper export --legacy",
-    "publish": "npm run export && cp -R __sapper__/export/* website",
     "start": "node __sapper__/build"
   },
   "repository": {

@@ -27,6 +27,14 @@ console.log('Generating Cangjie Data...');
     return acc;
   }, {});
 
+  // Creates the data folder
+  fs.mkdir(
+    'static/data',
+    { recursive: true }, (err) => {
+      if (err) throw err;
+    },
+  );
+
   // write JSON string to a file
   fs.writeFile(
     'static/data/all_chars.json',

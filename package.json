@@ -3,12 +3,8 @@
   "description": "倉頡輸入法練習",
   "version": "0.0.1",
   "scripts": {
-    "data": "node data/generateData.mjs",
-    "predev": "npm run data",
     "dev": "sapper dev",
-    "prebuild": "npm run data",
     "build": "sapper build --legacy",
-    "preexport": "npm run data",
     "export": "sapper export --legacy --entry '/ /404'",
     "postexport": "mv __sapper__/export/404/index.html __sapper__/export/404.html && rm -r __sapper__/export/404",
     "start": "node __sapper__/build",

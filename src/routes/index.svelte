@@ -5,10 +5,37 @@
   let isClient = false;
   let currentLevel = '1';
   let currentVocab = 0;
+  let inputValue = '';
+  let shuffledLevelist;
+  let cangjieChars;
 
-  $: cangjieChars = isClient && d3.json('data/all_chars.json');
-  $: currentLevelList = isClient && d3.csv(`data/mandarin-${currentLevel}000.csv`);
+  $: cangjieCharsPromise = isClient && d3.json('data/all_chars.json');
+  $: currentLevelListPromise = isClient && d3.csv(`data/mandarin-${currentLevel}000.csv`);
   $: { if(currentLevel) currentVocab = 0 }
+  $: {
+    if(
+      shuffledLevelist
+        && (inputValue === shuffledLevelist[currentVocab].Traditional
+        || inputValue.toUpperCase() === enString(shuffledLevelist[currentVocab].Traditional))
+    ) {
+      currentVocab++;
+      inputValue = '';
+    }
+  }
+
+  const setShuffledLevelist = list => {
+    shuffledLevelist = d3.shuffle(list);
+    return shuffledLevelist;
+  }
+
+  const enString = zhString => zhString.split('')
+    .map(char => cangjieChars[char].toUpperCase())
+    .join(' ');
+
+  const setCangjieChars = chars => {
+    cangjieChars = chars;
+    return '';
+  }
 
   onMount(() => {
     isClient = true;
@@ -34,12 +61,9 @@
     margin: 0;
   }
 
-  .cj-en {
-    text-transform: uppercase;
-  }
-
   input {
-    margin: 30px 0
+    margin: 30px 0;
+    text-transform: uppercase;
   }
 </style>
 
@@ -57,18 +81,17 @@
     {/each}
   </select>
 
-  {#await Promise.all([cangjieChars, currentLevelList])}
+  {#await Promise.all([cangjieCharsPromise, currentLevelListPromise])}
     <h1>載入中...</h1>
   {:then [chars, levelist]}
-    {#await Promise.resolve(d3.shuffle(levelist)) then shuffledLevelist}
+    {setCangjieChars(chars)}
+    {#await Promise.resolve(setShuffledLevelist(levelist)) then shuffledLevelist}
       <h1>{shuffledLevelist[currentVocab].Traditional}</h1>
       <p class="cj-en">
-        {#each shuffledLevelist[currentVocab].Traditional.split('') as char}
-          {chars[char]}&nbsp;
-        {/each}
+        {enString(shuffledLevelist[currentVocab].Traditional)}
       </p>
     {/await}
   {/await}
 
-  <input type="text">
+  <input type="text" bind:value={inputValue}>
 </div>

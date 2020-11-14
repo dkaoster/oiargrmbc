@@ -1,50 +1,74 @@
 <script>
-  import successkid from 'images/successkid.jpg';
+  import { onMount } from 'svelte';
+  import * as d3 from 'd3';
+
+  let isClient = false;
+  let currentLevel = '1';
+  let currentVocab = 0;
+
+  $: cangjieChars = isClient && d3.json('data/all_chars.json');
+  $: currentLevelList = isClient && d3.csv(`data/mandarin-${currentLevel}000.csv`);
+  $: { if(currentLevel) currentVocab = 0 }
+
+  onMount(() => {
+    isClient = true;
+  });
 </script>
 
 <style>
-  h1, figure, p {
-    text-align: center;
-    margin: 0 auto;
+  .wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
   h1 {
-    font-size: 2.8em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 0.5em 0;
-  }
-
-  figure {
-    margin: 0 0 1em 0;
-  }
-
-  img {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 0 1em 0;
+    margin: 30px 0 0;
+    font-size: 64px;
   }
 
   p {
-    margin: 1em auto;
+    margin: 0;
   }
 
-  @media (min-width: 480px) {
-    h1 {
-      font-size: 4em;
-    }
+  .cj-en {
+    text-transform: uppercase;
+  }
+
+  input {
+    margin: 30px 0
   }
 </style>
 
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>倉頡練習</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 </svelte:head>
 
-<h1>Great success!</h1>
+<div class="wrap">
+  <select name="level" id="level" bind:value={currentLevel}>
+    {#each [...Array(10).keys()] as level}
+      <option value={level + 1}>{level + 1}</option>
+    {/each}
+  </select>
 
-<figure>
-  <img alt="Success Kid" src="{successkid}">
-  <figcaption>Have fun with Sapper!</figcaption>
-</figure>
+  {#await Promise.all([cangjieChars, currentLevelList])}
+    <h1>載入中...</h1>
+  {:then [chars, levelist]}
+    {#await Promise.resolve(d3.shuffle(levelist)) then shuffledLevelist}
+      <h1>{shuffledLevelist[currentVocab].Traditional}</h1>
+      <p class="cj-en">
+        {#each shuffledLevelist[currentVocab].Traditional.split('') as char}
+          {chars[char]}&nbsp;
+        {/each}
+      </p>
+    {/await}
+  {/await}
 
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+  <input type="text">
+</div>

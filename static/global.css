@@ -34,3 +34,7 @@ code {
 		font-size: 16px;
 	}
 }
+
+html, body, #sapper {
+	height: 100%;
+}

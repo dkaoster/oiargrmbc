@@ -2,6 +2,13 @@
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
 
+  const cjMap = {
+    A: '日', B: '月', C: '金', D: '木', E: '水', F: '火', G: '土', H: '竹',
+    I: '戈', J: '十', K: '大', L: '中', M: '一', N: '弓', O: '人', P: '心',
+    Q: '手', R: '口', S: '尸', T: '廿', U: '山', V: '女', W: '田', X: '難',
+    Y: '卜', Z: 'Z'
+  };
+
   let isClient = false;
   let currentLevel = '1';
   let currentVocab = 0;
@@ -32,6 +39,10 @@
     .map(char => cangjieChars[char].toUpperCase())
     .join(' ');
 
+  const cjString = enString => enString.split('')
+    .map(char => cjMap[char] || ' ')
+    .join('');
+
   const setCangjieChars = chars => {
     cangjieChars = chars;
     return '';
@@ -61,6 +72,10 @@
     margin: 0;
   }
 
+  .cj-en {
+    letter-spacing: 4px;
+  }
+
   input {
     margin: 30px 0;
     text-transform: uppercase;
@@ -87,6 +102,9 @@
     {setCangjieChars(chars)}
     {#await Promise.resolve(setShuffledLevelist(levelist)) then shuffledLevelist}
       <h1>{shuffledLevelist[currentVocab].Traditional}</h1>
+      <p class="cj-zh">
+        {cjString(enString(shuffledLevelist[currentVocab].Traditional))}
+      </p>
       <p class="cj-en">
         {enString(shuffledLevelist[currentVocab].Traditional)}
       </p>

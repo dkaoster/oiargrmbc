@@ -120,6 +120,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: #F8F8F8;
   }
 
   .controls {
@@ -134,7 +135,7 @@
 
   h1 {
     margin: 30px 0 0;
-    font-size: 64px;
+    font-size: 72px;
   }
 
   p {

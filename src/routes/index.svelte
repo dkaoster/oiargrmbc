@@ -2,34 +2,8 @@
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
 
-  // Mapping of English letters to cangjie radicals.
-  const cjMap = {
-    A: '日',
-    B: '月',
-    C: '金',
-    D: '木',
-    E: '水',
-    F: '火',
-    G: '土',
-    H: '竹',
-    I: '戈',
-    J: '十',
-    K: '大',
-    L: '中',
-    M: '一',
-    N: '弓',
-    O: '人',
-    P: '心',
-    Q: '手',
-    R: '口',
-    S: '尸',
-    T: '廿',
-    U: '山',
-    V: '女',
-    W: '田',
-    X: '難',
-    Y: '卜',
-  };
+  import cjMap from '../cjMap';
+  import Card from '../components/Card.svelte';
 
   // Boolean for whether we are on the client (we only want to load data on the client)
   let isClient = false;
@@ -82,9 +56,6 @@
   // Load the current level list
   $: currentLevelListPromise = isClient && d3.csv(`data/mandarin-${currentLevel}000.csv`);
 
-  // The current input value in cj
-  $: inputValueCJ = cjString(inputValue.toUpperCase());
-
   // If we change levels, set the current vocab index to 0
   $: { if (currentLevel) currentVocab = 0 }
 
@@ -110,19 +81,11 @@
   onMount(() => {
     isClient = true;
   });
+
+  const inputCallback = (input) => { inputValue = input };
 </script>
 
 <style>
-  .wrap {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #F8F8F8;
-  }
-
   .controls {
     display: flex;
     justify-content: center;
@@ -146,54 +109,46 @@
     letter-spacing: 4px;
   }
 
-  .exercise {
-    margin: 30px 0;
-    text-transform: uppercase;
-  }
 </style>
 
 <svelte:head>
   <title>倉頡練習</title>
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 </svelte:head>
 
-<div class="wrap">
-  <div class="controls">
-    <label for="level">程度</label>
-    <select name="level" id="level" bind:value={currentLevel}>
-      {#each [...Array(10).keys()] as level}
-        <option value={level + 1}>{level + 1}</option>
-      {/each}
-    </select>
+<Card inputTextCallback={inputCallback} inputText={inputValue}>
+  <div class="wrap">
+    <div class="controls">
+      <label for="level">程度</label>
+      <select name="level" id="level" bind:value={currentLevel}>
+        {#each [...Array(10).keys()] as level}
+          <option value={level + 1}>{level + 1}</option>
+        {/each}
+      </select>
 
-    <label for="en">英文字幕</label>
-    <input id="en" type="checkbox" bind:checked={showEn} />
+      <label for="en">英文字幕</label>
+      <input id="en" type="checkbox" bind:checked={showEn} />
 
-    <label for="cj">倉頡字幕</label>
-    <input id="cj" type="checkbox" bind:checked={showCj} />
-  </div>
+      <label for="cj">中文字幕</label>
+      <input id="cj" type="checkbox" bind:checked={showCj} />
+    </div>
 
-  {#await Promise.all([cangjieCharsPromise, currentLevelListPromise])}
-    <h1>載入中...</h1>
-  {:then [chars, levelist]}
-    {setCangjieChars(chars)}
-    {#await Promise.resolve(setShuffledLevelist(levelist)) then shuffledLevelist}
-      <h1>{shuffledLevelist[currentVocab].Traditional}</h1>
-      {#if showCj}
-        <p class="cj-zh">
-          {cjString(enString(shuffledLevelist[currentVocab].Traditional))}
-        </p>
-      {/if}
-      {#if showEn}
-        <p class="cj-en">
-          {enString(shuffledLevelist[currentVocab].Traditional)}
-        </p>
-      {/if}
+    {#await Promise.all([cangjieCharsPromise, currentLevelListPromise])}
+      <h1>載入中...</h1>
+    {:then [chars, levelist]}
+      {setCangjieChars(chars)}
+      {#await Promise.resolve(setShuffledLevelist(levelist)) then shuffledLevelist}
+        <h1>{shuffledLevelist[currentVocab].Traditional}</h1>
+        {#if showCj}
+          <p class="cj-zh">
+            {cjString(enString(shuffledLevelist[currentVocab].Traditional))}
+          </p>
+        {/if}
+        {#if showEn}
+          <p class="cj-en">
+            {enString(shuffledLevelist[currentVocab].Traditional)}
+          </p>
+        {/if}
+      {/await}
     {/await}
-  {/await}
-
-  <div>{inputValueCJ}</div>
-  <input class="exercise" type="text" bind:value={inputValue}>
-</div>
+  </div>
+</Card>

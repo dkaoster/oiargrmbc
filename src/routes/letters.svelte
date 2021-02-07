@@ -35,6 +35,6 @@
   <title>中文字母練習</title>
 </svelte:head>
 
-<Card inputText={inputLetter} inputTextCallback={inputLetterCallback}>
+<Card inputText={inputLetter} inputTextCallback={inputLetterCallback} color="#1dd1a1">
   <h1>{currentRadical}</h1>
 </Card>

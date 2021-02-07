@@ -115,7 +115,7 @@
   <title>倉頡練習</title>
 </svelte:head>
 
-<Card inputTextCallback={inputCallback} inputText={inputValue}>
+<Card inputTextCallback={inputCallback} inputText={inputValue} color="#9c88ff">
   <div class="wrap">
     <div class="controls">
       <label for="level">程度</label>

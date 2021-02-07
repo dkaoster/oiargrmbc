@@ -1,6 +1,7 @@
 <script>
   export let inputText;
   export let inputTextCallback;
+  export let color = '#1dd1a1';
 
   let text = '';
 
@@ -14,7 +15,7 @@
     border: 1px solid #DDD;
     text-align: center;
     border-radius: 20px;
-    box-shadow: 0 1px 30px 0 rgba(0, 0, 0, 0.01);
+    box-shadow: 0 1px 30px 0 rgba(0, 0, 0, 0.05);
     overflow: hidden;
   }
 
@@ -23,7 +24,7 @@
   }
 
   .input-wrap {
-    background-color: #1dd1a1;
+    background-color: var(--color);
   }
 
   input {
@@ -37,7 +38,7 @@
   }
 </style>
 
-<div class="card">
+<div class="card" style="--color: {color};">
   <div class="radical-wrap">
     <slot />
   </div>

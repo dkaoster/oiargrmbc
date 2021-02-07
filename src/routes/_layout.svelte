@@ -6,7 +6,7 @@
 
 <style>
   :global(body) {
-    background-color: #EEEEEE;
+    background-color: #F8F8F8;
   }
 
   main {

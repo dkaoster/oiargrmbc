@@ -1,5 +1,11 @@
 <script>
+  import About from './About.svelte';
+
   export let segment;
+
+  let showAbout = false;
+
+  const toggleAbout = () => { showAbout = !showAbout }
 </script>
 
 <style>
@@ -21,6 +27,7 @@
 
   img {
     width: 40px;
+    cursor: pointer;
   }
 
   a {
@@ -30,17 +37,18 @@
   }
 
   a:hover {
-    background-color: #DDD;
+    background-color: #CCC;
   }
 
   a.active {
-    background-color: #CCC;
+    background-color: #222;
+    color: white;
   }
 </style>
 
 <nav>
   <div class="nav-inner">
-    <img src="apple-touch-icon.png" alt="logo">
+    <img src="apple-touch-icon.png" alt="logo" on:click|stopPropagation={toggleAbout}>
 
     <div class="links">
       <a class:active={!segment} href="/">倉頡練習</a>
@@ -48,3 +56,7 @@
     </div>
   </div>
 </nav>
+
+{#if showAbout}
+  <About {toggleAbout} />
+{/if}

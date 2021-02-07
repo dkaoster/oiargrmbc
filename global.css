@@ -38,3 +38,7 @@ code {
 html, body, #sapper {
 	height: 100%;
 }
+
+* {
+	box-sizing: border-box;
+}

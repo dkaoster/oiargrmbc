@@ -89,6 +89,8 @@
   .controls {
     display: flex;
     justify-content: center;
+    color: #DDD;
+    font-size: 12px;
   }
 
   label {
@@ -133,7 +135,7 @@
     </div>
 
     {#await Promise.all([cangjieCharsPromise, currentLevelListPromise])}
-      <h1>載入中...</h1>
+      <h1>...</h1>
     {:then [chars, levelist]}
       {setCangjieChars(chars)}
       {#await Promise.resolve(setShuffledLevelist(levelist)) then shuffledLevelist}

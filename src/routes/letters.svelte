@@ -10,7 +10,8 @@
       if (inputLetter.length > 1) {
         inputLetter = inputLetter.slice(-1);
       }
-      inputLetter = cjMap[inputLetter.toUpperCase()] || '';
+      inputLetter = cjMap[inputLetter.toUpperCase()]
+        || (Object.values(cjMap).indexOf(inputLetter) >= 0 ? inputLetter : '');
     }
     if (inputLetter === undefined || inputLetter === cjMap[currentLetter]) {
       const letters = Object.keys(cjMap).filter((l) => l !== currentLetter);

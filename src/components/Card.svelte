@@ -33,7 +33,7 @@
     outline: none;
     border: none;
     font-size: 24px;
-    width: 120px;
+    width: 180px;
     text-align: center;
   }
 </style>

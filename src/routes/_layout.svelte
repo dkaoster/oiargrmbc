@@ -6,7 +6,7 @@
 
 <style>
   :global(body) {
-    background-color: #F8F8F8;
+    background-color: #fff7f4;
   }
 
   main {
@@ -20,7 +20,7 @@
 
 <svelte:head>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400&display=swap" rel="stylesheet">
 </svelte:head>
 
 <Nav {segment} />

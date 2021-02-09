@@ -33,16 +33,16 @@
   a {
     text-decoration: none;
     padding: 8px 15px;
-    border-radius: 8px;
+    border: 2px solid transparent;
+    margin-left: 8px;
   }
 
   a:hover {
-    background-color: #CCC;
+    border-bottom: 2px solid #222;
   }
 
   a.active {
-    background-color: #222;
-    color: white;
+    border: 2px solid #222;
   }
 </style>
 

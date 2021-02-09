@@ -5,6 +5,7 @@
   let currentLetter;
   let inputLetter;
 
+  // Process the given input
   $: {
     if (inputLetter) {
       if (inputLetter.length > 1) {
@@ -27,8 +28,9 @@
 
 <style>
   h1 {
-    font-size: 72px;
+    font-size: 96px;
     margin: 0;
+    font-weight: 200;
   }
 </style>
 

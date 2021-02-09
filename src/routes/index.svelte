@@ -4,6 +4,7 @@
 
   import cjMap from '../cjMap';
   import Card from '../components/Card.svelte';
+  import SettingsIcon from '../components/svg/SettingsIcon.svelte';
 
   // Boolean for whether we are on the client (we only want to load data on the client)
   let isClient = false;
@@ -27,6 +28,9 @@
   // Checkboxes for showing or hiding the en / cj hints
   let showEn = false;
   let showCj = true;
+
+  // Show the settings dialog
+  let showSettings = false;
 
   // Sets the shuffled list in the local variable
   const setShuffledLevelist = (list) => {
@@ -87,52 +91,68 @@
 
 <style>
   .controls {
-    display: flex;
-    justify-content: center;
-    color: #DDD;
     font-size: 12px;
-  }
-
-  label {
-    margin-left: 20px;
-    margin-right: 4px;
+    position: absolute;
+    background-color: #fff7f4;
+    padding: 10px;
+    border: 2px solid black;
+    right: -70px;
+    top: 40px;
   }
 
   h1 {
-    margin: 30px 0 0;
+    margin: 0;
     font-size: 72px;
+    font-weight: 200;
   }
 
   p {
     margin: 0;
+    font-weight: 400;
   }
 
   .cj-en {
     letter-spacing: 4px;
   }
 
+  .settingsButton {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    cursor: pointer;
+  }
 </style>
 
 <svelte:head>
   <title>倉頡練習</title>
 </svelte:head>
 
+<svelte:window on:click={() => { showSettings = false }} />
+
 <Card inputTextCallback={inputCallback} inputText={inputValue} color="#9c88ff">
   <div class="wrap">
-    <div class="controls">
-      <label for="level">程度</label>
-      <select name="level" id="level" bind:value={currentLevel}>
-        {#each [...Array(10).keys()] as level}
-          <option value={level + 1}>{level + 1}</option>
-        {/each}
-      </select>
-
-      <label for="en">英文字幕</label>
-      <input id="en" type="checkbox" bind:checked={showEn} />
-
-      <label for="cj">中文字幕</label>
-      <input id="cj" type="checkbox" bind:checked={showCj} />
+    <div class="settingsButton" on:click|stopPropagation={() => { showSettings = true }}>
+      <SettingsIcon />
     </div>
+    {#if showSettings}
+      <div class="controls" on:click|stopPropagation>
+        <label for="level">程度</label>
+        <select name="level" id="level" bind:value={currentLevel}>
+          {#each [...Array(10).keys()] as level}
+            <option value={level + 1}>{level + 1}</option>
+          {/each}
+        </select>
+        <br />
+
+        <label for="en">英文字幕</label>
+        <input id="en" type="checkbox" bind:checked={showEn} />
+        <br />
+
+        <label for="cj">中文字幕</label>
+        <input id="cj" type="checkbox" bind:checked={showCj} />
+      </div>
+    {/if}
 
     {#await Promise.all([cangjieCharsPromise, currentLevelListPromise])}
       <h1>...</h1>

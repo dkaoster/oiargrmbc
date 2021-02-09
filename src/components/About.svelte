@@ -10,18 +10,22 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    z-index: 10;
   }
 
   .about-box {
     background-color: white;
-    border-radius: 20px;
+    border: 2px solid black;
     padding: 20px 30px;
     max-width: 600px;
+    cursor: initial;
+    position: relative;
   }
 
   h1 {
@@ -29,12 +33,40 @@
     font-weight: bold;
     margin-top: 30px;
   }
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .diagonal {
+    height: 2px;
+    width: 30px;
+    background-color: black;
+    position: absolute;
+  }
+
+  .diagonal:nth-of-type(1) {
+    transform: rotate(45deg);
+  }
+
+  .diagonal:nth-of-type(2) {
+    transform: rotate(-45deg);
+  }
 </style>
 
 <svelte:window on:click={toggleAbout} />
 
 <div class="cover">
   <div class="about-box" on:click|stopPropagation>
+    <div class="close" on:click={toggleAbout}><div class="diagonal" /><div class="diagonal" /></div>
     <h1>這是什麼？</h1>
     <p>這是一個練習倉頡輸入法的網站。倉頡的優點在於打字不用選字，因為每一個字都有它自己的順序。</p>
 
@@ -47,6 +79,6 @@
       href="https://github.com/dkaoster/oiargrmbc">pull request</a>。</p>
 
     <h1>為什麼是豬？</h1>
-    <p>為什麼不是？</p>
+    <p><a href="https://udn.com/news/story/9750/5047555" target="_blank" rel="noopener noreferrer">為什麼不是？</a></p>
   </div>
 </div>

@@ -2,6 +2,8 @@
   import Nav from '../components/Nav.svelte';
 
   export let segment;
+
+  const fontString = 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400';
 </script>
 
 <style>
@@ -19,8 +21,12 @@
 </style>
 
 <svelte:head>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="{fontString}&display=swap" />
+  <link rel="stylesheet" href="{fontString}&display=swap" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="{fontString}&display=swap" />
+  </noscript>
 </svelte:head>
 
 <Nav {segment} />

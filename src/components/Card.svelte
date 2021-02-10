@@ -53,6 +53,7 @@
   .keyboard {
     grid-column: 1 / 3;
     padding: 6px 10px;
+    width: 400px;
   }
 </style>
 

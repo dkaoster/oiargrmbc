@@ -30,12 +30,16 @@
   h1 {
     font-size: 96px;
     margin: 0;
-    font-weight: 200;
+    font-weight: 100;
   }
 </style>
 
 <svelte:head>
   <title>中文字母練習</title>
+  <meta name="title" content="中文字母練習">
+  <meta property="og:title" content="中文字母練習">
+  <meta name="twitter:title" content="中文字母練習" />
+  <meta property="og:url" content="https://www.oiargrmbc.com/letters/" />
 </svelte:head>
 
 <Card inputText={inputLetter} inputTextCallback={inputLetterCallback} color="#1dd1a1">

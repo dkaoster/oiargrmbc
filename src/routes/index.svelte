@@ -44,7 +44,7 @@
     .join(' ');
 
   // Generates the cj string given the en characters
-  const cjString = (zhString) => zhString.split('')
+  const cjString = (string) => string.toUpperCase().split('')
     .map((char) => cjMap[char] || char)
     .join('');
 
@@ -68,10 +68,8 @@
     if (
       // First check if we've loaded a level
       shuffledLevelist
-        // Check if user used the native cangjie input method to type characters directly
-        && (inputValue === shuffledLevelist[currentVocab].Traditional
-        // Or we check against the cangjie string
-        || inputValue.toUpperCase() === enString(shuffledLevelist[currentVocab].Traditional))
+        // Check if the text is right
+        && (inputValue === cjString(enString(shuffledLevelist[currentVocab].Traditional)))
     ) {
       // Go to the next vocab word
       currentVocab += 1;
@@ -86,7 +84,7 @@
     isClient = true;
   });
 
-  const inputCallback = (input) => { inputValue = input };
+  const inputCallback = (input) => { inputValue = cjString(input) };
 </script>
 
 <style>
@@ -94,16 +92,16 @@
     font-size: 12px;
     position: absolute;
     background-color: #fff7f4;
-    padding: 10px;
+    padding: 5px 10px;
     border: 2px solid black;
-    right: -70px;
+    right: -65px;
     top: 40px;
   }
 
   h1 {
     margin: 0;
     font-size: 72px;
-    font-weight: 200;
+    font-weight: 100;
   }
 
   p {
@@ -122,10 +120,18 @@
     width: 20px;
     cursor: pointer;
   }
+
+  .option {
+    margin: 5px 0;
+  }
 </style>
 
 <svelte:head>
   <title>倉頡練習</title>
+  <meta name="title" content="倉頡練習">
+  <meta property="og:title" content="倉頡練習">
+  <meta name="twitter:title" content="倉頡練習" />
+  <meta property="og:url" content="https://www.oiargrmbc.com/" />
 </svelte:head>
 
 <svelte:window on:click={() => { showSettings = false }} />
@@ -137,20 +143,24 @@
     </div>
     {#if showSettings}
       <div class="controls" on:click|stopPropagation>
-        <label for="level">程度</label>
-        <select name="level" id="level" bind:value={currentLevel}>
-          {#each [...Array(10).keys()] as level}
-            <option value={level + 1}>{level + 1}</option>
-          {/each}
-        </select>
-        <br />
+        <div class="option">
+          <label for="level">程度</label>
+          <select name="level" id="level" bind:value={currentLevel}>
+            {#each [...Array(10).keys()] as level}
+              <option value={level + 1}>{level + 1}</option>
+            {/each}
+          </select>
+        </div>
 
-        <label for="en">英文字幕</label>
-        <input id="en" type="checkbox" bind:checked={showEn} />
-        <br />
+        <div class="option">
+          <label for="en">英文字幕</label>
+          <input id="en" type="checkbox" bind:checked={showEn} />
+        </div>
 
-        <label for="cj">中文字幕</label>
-        <input id="cj" type="checkbox" bind:checked={showCj} />
+        <div class="option">
+          <label for="cj">中文字幕</label>
+          <input id="cj" type="checkbox" bind:checked={showCj} />
+        </div>
       </div>
     {/if}
 

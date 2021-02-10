@@ -17,6 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-x: hidden;
   }
 </style>
 
@@ -27,6 +28,17 @@
   <noscript>
     <link rel="stylesheet" href="{fontString}&display=swap" />
   </noscript>
+
+  <script async defer data-domain="oiargrmbc.com" src="https://plausible.io/js/plausible.js"></script>
+
+  <meta name="keywords" content="倉頡, 練習, 中文, 輸入法">
+  <meta name="description" content="練習倉頡輸入法">
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.oiargrmbc.com/oiargrmbc.jpg" />
+  <meta property="og:site_name" content="OIARGRMBC" />
+  <meta property="og:locale" content="zh" />
+  <meta property="og:description" content="練習倉頡輸入法">
+  <meta name="twitter:card" content="summary_large_image">
 </svelte:head>
 
 <Nav {segment} />

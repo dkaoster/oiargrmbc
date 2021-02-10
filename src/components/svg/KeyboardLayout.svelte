@@ -1,8 +1,15 @@
 <script>
   import CJMap from '../../cjMap';
+
+  export let onKeypress;
+
+  const handleClick = (evt) => {
+    const letter = evt.target.parentElement.getAttribute('data-letter');
+    if (letter) onKeypress(letter);
+  };
 </script>
 
-<svg id="svg2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 596 196.06" width="100%">
+<svg id="svg2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 596 196.06" width="100%" on:click={handleClick}>
   <defs>
     <style>
       .cls-1 {
@@ -204,7 +211,9 @@
     <g id="use4379">
       <rect id="rect4074-5" data-name="rect4074" class="cls-2" x="440" y="160.06" width="56" height="36" rx="7"/>
     </g>
-    <rect id="use3907" class="cls-1" x="160" y="160" width="275" height="36" rx="7"/>
+    <g data-letter=" ">
+      <rect id="use3907" class="cls-1" x="160" y="160" width="275" height="36" rx="7" />
+    </g>
   </g>
   <g id="g3130">
     <rect id="rect3132" class="cls-3" x="540" y="40" width="56" height="36" rx="7"/>

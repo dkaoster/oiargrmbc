@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from 'svelte';
   import KeyboardIcon from './svg/KeyboardIcon.svelte';
   import Keyboard from './svg/KeyboardLayout.svelte';
 
@@ -8,10 +9,19 @@
 
   let text = '';
   let width;
+  let input;
   let showKeyboard = false;
 
   $: { inputTextCallback(text); text = ''; }
   $: { text = inputText }
+  
+  const onKeypress = (key) => {
+    text += key;
+    input.focus();
+  };
+  const globalKeypress = (evt) => onKeypress(evt.key);
+
+  onMount(() => setTimeout(() => input.focus(), 500));
 </script>
 
 <style>
@@ -45,8 +55,8 @@
     color: white;
     outline: none;
     border: none;
-    font-size: 24px;
-    width: 180px;
+    font-size: 18px;
+    width: 100%;
     margin-left: 10px;
   }
 
@@ -57,21 +67,21 @@
   }
 </style>
 
-<svelte:window bind:innerWidth={width} />
+<svelte:window bind:innerWidth={width} on:keypress={globalKeypress} />
 
 <div class="card" style="--color: {color};">
   <div class="radical-wrap">
     <slot />
   </div>
   <div class="input-wrap">
-    <input type="text" bind:value={text} onblur="this.focus()">
+    <input type="text" size="15" bind:value={text} bind:this={input} on:keypress|stopPropagation>
     {#if width > 640}
       <div class="keyboard-icon" on:click={() => { showKeyboard = !showKeyboard }}>
         <KeyboardIcon color={showKeyboard ? 'white' : 'black'} />
       </div>
       {#if showKeyboard}
         <div class="keyboard">
-          <Keyboard />
+          <Keyboard {onKeypress} />
         </div>
       {/if}
     {/if}

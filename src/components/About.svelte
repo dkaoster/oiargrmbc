@@ -26,6 +26,7 @@
     max-width: 600px;
     cursor: initial;
     position: relative;
+    margin: 0 20px;
   }
 
   h1 {

@@ -39,7 +39,6 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-svelte3": "^2.7.3",
     "sqlite": "^4.0.15",
-    "sqlite3": "^5.0.0",
     "svelte": "^3.44.2"
   }
 }

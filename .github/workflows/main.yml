@@ -36,4 +36,4 @@ jobs:
           # The folder the action should deploy.
           FOLDER: build
           # Automatically remove deleted files from the deploy branch
-          CLEAN: false
+          CLEAN: true

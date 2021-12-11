@@ -7,7 +7,5 @@ export default {
       pages: 'build',
       assets: 'build',
     }),
-    trailingSlash: 'always',
-    appDir: 'app',
   },
 };

@@ -20,7 +20,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm install
-          npm run export
+          npm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -29,6 +29,6 @@ jobs:
           # The branch the action should deploy to.
           BRANCH: gh-pages
           # The folder the action should deploy.
-          FOLDER: __sapper__/export
+          FOLDER: build
           # Automatically remove deleted files from the deploy branch
-          CLEAN: false
+          CLEAN: true

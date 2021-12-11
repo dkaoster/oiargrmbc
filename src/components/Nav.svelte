@@ -48,11 +48,11 @@
 
 <nav>
   <div class="nav-inner">
-    <img src="apple-touch-icon.png" alt="logo" on:click|stopPropagation={toggleAbout}>
+    <img src="/apple-touch-icon.png" alt="logo" on:click|stopPropagation={toggleAbout}>
 
     <div class="links">
-      <a class:active={!segment} href="/">倉頡練習</a>
-      <a class:active={segment === 'letters'} href="letters">中文字母練習</a>
+      <a class:active={segment === '/'} href="/">倉頡練習</a>
+      <a class:active={segment === '/letters/'} href="/letters">中文字母練習</a>
     </div>
   </div>
 </nav>

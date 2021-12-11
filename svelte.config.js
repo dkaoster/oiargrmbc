@@ -8,6 +8,6 @@ export default {
       assets: 'build',
     }),
     trailingSlash: 'always',
-    appDir: 'app_',
+    appDir: 'app',
   },
 };

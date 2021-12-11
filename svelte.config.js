@@ -6,7 +6,6 @@ export default {
       // default options are shown
       pages: 'build',
       assets: 'build',
-      fallback: '404.html',
     }),
     trailingSlash: 'always',
   },

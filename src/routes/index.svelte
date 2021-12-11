@@ -19,7 +19,7 @@
   let inputValue = '';
 
   // The current set of characters, shuffled into a random order
-  let shuffledLevelist;
+  let currentLevelList;
 
   // The variable that will contain chinese words mapped to their cangjie characters (en)
   // after loaded
@@ -28,14 +28,16 @@
   // Checkboxes for showing or hiding the en / cj hints
   let showEn = false;
   let showCj = true;
+  let randomOrder = true;
 
   // Show the settings dialog
   let showSettings = false;
 
   // Sets the shuffled list in the local variable
-  const setShuffledLevelist = (list) => {
-    shuffledLevelist = d3.shuffle(list);
-    return shuffledLevelist;
+  const setLevelList = (list) => {
+    currentVocab = 0;
+    currentLevelList = randomOrder ? d3.shuffle(JSON.parse(JSON.stringify(list))) : list;
+    return currentLevelList;
   }
 
   // Generates the en string given a chinese character or phrase
@@ -67,14 +69,14 @@
   $: {
     if (
       // First check if we've loaded a level
-      shuffledLevelist
+      currentLevelList
         // Check if the text is right
-        && (inputValue === cjString(enString(shuffledLevelist[currentVocab].Traditional)))
+        && (inputValue === cjString(enString(currentLevelList[currentVocab].Traditional)))
     ) {
       // Go to the next vocab word
       currentVocab += 1;
       // Go back to 0 index if we've seen them all
-      currentVocab %= shuffledLevelist.length;
+      currentVocab %= currentLevelList.length;
       // reset input value
       inputValue = '';
     }
@@ -109,8 +111,13 @@
     font-weight: 400;
   }
 
+  .cj-zh {
+    word-spacing: 10px;
+  }
+
   .cj-en {
-    letter-spacing: 4px;
+    letter-spacing: 2px;
+    word-spacing: 10px;
   }
 
   .settingsButton {
@@ -161,6 +168,11 @@
           <label for="cj">中文字幕</label>
           <input id="cj" type="checkbox" bind:checked={showCj} />
         </div>
+
+        <div class="option">
+          <label for="order">隨機順序</label>
+          <input id="order" type="checkbox" bind:checked={randomOrder} />
+        </div>
       </div>
     {/if}
 
@@ -168,16 +180,16 @@
       <h1>...</h1>
     {:then [chars, levelist]}
       {setCangjieChars(chars)}
-      {#await Promise.resolve(setShuffledLevelist(levelist)) then shuffledLevelist}
-        <h1>{shuffledLevelist[currentVocab].Traditional}</h1>
+      {#await Promise.resolve(setLevelList(levelist, randomOrder)) then list}
+        <h1>{list[currentVocab].Traditional}</h1>
         {#if showCj}
           <p class="cj-zh">
-            {cjString(enString(shuffledLevelist[currentVocab].Traditional))}
+            {cjString(enString(list[currentVocab].Traditional))}
           </p>
         {/if}
         {#if showEn}
           <p class="cj-en">
-            {enString(shuffledLevelist[currentVocab].Traditional)}
+            {enString(list[currentVocab].Traditional)}
           </p>
         {/if}
       {/await}

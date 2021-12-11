@@ -38,7 +38,7 @@
 				host: location.host,
 				route: true,
 				spa: false,
-				trailing_slash: "never",
+				trailing_slash: "always",
 				hydrate: {
 					status: 200,
 					error: null,
@@ -48,7 +48,7 @@
 					],
 					page: {
 						host: location.host, // TODO this is redundant
-						path: "\u002Fletters",
+						path: "\u002Fletters\u002F",
 						query: new URLSearchParams(""),
 						params: {}
 					}
@@ -71,7 +71,7 @@
 <nav class="svelte-ofivij"><div class="nav-inner svelte-ofivij"><img src="/apple-touch-icon.png" alt="logo" class="svelte-ofivij">
 
     <div class="links"><a href="/" class="svelte-ofivij">倉頡練習</a>
-      <a href="/letters" class="svelte-ofivij">中文字母練習</a></div></div></nav>
+      <a href="/letters" class="svelte-ofivij active">中文字母練習</a></div></div></nav>
 
 
 
@@ -79,7 +79,7 @@
 
 
 
-<div class="card svelte-60bo50" style="--color: #1dd1a1;"><div class="radical-wrap svelte-60bo50"><h1 class="svelte-1m7m3xm">火</h1></div>
+<div class="card svelte-60bo50" style="--color: #1dd1a1;"><div class="radical-wrap svelte-60bo50"><h1 class="svelte-1m7m3xm">女</h1></div>
   <div class="input-wrap svelte-60bo50"><input type="text" size="15" class="svelte-60bo50" value="">
     </div></div></main>
 

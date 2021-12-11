@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
+    "postbuild": "mv build/404/index.html build/404.html",
     "preview": "svelte-kit preview",
     "lint": "eslint ."
   },

@@ -1,3 +1,16 @@
+<script context="module">
+  /**
+   * Layout Wrapper
+   */
+  export function load(props) {
+    return {
+      // We need to know which path we are currently on in order to display
+      // the correct path icon inside the navigation.
+      props: { segment: props.page.path },
+    };
+  }
+</script>
+
 <script>
   import Nav from '../components/Nav.svelte';
 

@@ -1,3 +1,14 @@
+<script context="module">
+  /**
+   * Error Page
+   */
+  export function load({ error, status }) {
+    return {
+      props: { error, status },
+    };
+  }
+</script>
+
 <script>
   export let status;
   export let error;

@@ -98,6 +98,7 @@
     border: 2px solid black;
     right: -65px;
     top: 40px;
+    z-index: 1;
   }
 
   h1 {
@@ -131,6 +132,29 @@
   .option {
     margin: 5px 0;
   }
+
+  .next, .prev {
+    position: absolute;
+    top: 40%;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: 32px;
+    padding: 0 10px;
+  }
+
+  .prev:disabled {
+    color: #AAA;
+  }
+
+  .next {
+    right: 0;
+  }
+
+  .prev {
+    left: 0;
+  }
 </style>
 
 <svelte:head>
@@ -141,7 +165,18 @@
   <meta property="og:url" content="https://www.oiargrmbc.com/" />
 </svelte:head>
 
-<svelte:window on:click={() => { showSettings = false }} />
+<svelte:window
+  on:click={() => { showSettings = false }}
+  on:keydown={(evt) => {
+    if (evt.key === 'ArrowRight') {
+      currentVocab += 1;
+      currentVocab %= currentLevelList.length;
+    }
+    if (evt.key === 'ArrowLeft' && currentVocab > 0) {
+      currentVocab -= 1;
+    }
+  }}
+/>
 
 <Card inputTextCallback={inputCallback} inputText={inputValue} color="#9c88ff">
   <div class="wrap">
@@ -192,6 +227,18 @@
             {enString(list[currentVocab].Traditional)}
           </p>
         {/if}
+        <button
+          class="prev"
+          disabled={currentVocab === 0}
+          on:click={() => { if (currentVocab > 0) currentVocab -= 1 }}
+        >ᐸ</button>
+        <button
+          class="next"
+          on:click={() => {
+            currentVocab += 1;
+            currentVocab %= currentLevelList.length;
+          }}
+        >ᐳ</button>
       {/await}
     {/await}
   </div>

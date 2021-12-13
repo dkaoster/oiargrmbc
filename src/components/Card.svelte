@@ -14,7 +14,7 @@
 
   $: { inputTextCallback(text); text = ''; }
   $: { text = inputText }
-  
+
   const onKeypress = (key) => {
     text += key;
     input.focus();
@@ -31,7 +31,8 @@
   }
 
   .radical-wrap {
-    padding: 20px;
+    padding: 20px 60px;
+    min-width: 320px;
     position: relative;
   }
 

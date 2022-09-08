@@ -1,18 +1,18 @@
-const timestamp = 1658471593157;
+const timestamp = 1662656745849;
 const build = [
-  "/_app/start-8dd81868.js",
+  "/_app/start-23bfd81d.js",
   "/_app/assets/start-61d1577b.css",
-  "/_app/pages/__layout.svelte-4f3dccf1.js",
+  "/_app/pages/__layout.svelte-b25dd116.js",
   "/_app/assets/pages/__layout.svelte-ce682301.css",
-  "/_app/pages/__error.svelte-3de4d81c.js",
-  "/_app/assets/pages/__error.svelte-217c36c1.css",
-  "/_app/pages/index.svelte-5214cb74.js",
+  "/_app/pages/__error.svelte-83341b87.js",
+  "/_app/assets/pages/404.svelte-d811a77f.css",
+  "/_app/pages/index.svelte-53d3d92b.js",
   "/_app/assets/pages/index.svelte-2188ea1d.css",
-  "/_app/pages/letters.svelte-48940f06.js",
+  "/_app/pages/letters.svelte-7319d17b.js",
   "/_app/assets/pages/letters.svelte-1b0fd4f2.css",
-  "/_app/pages/404.svelte-61ef9086.js",
-  "/_app/chunks/vendor-0b507141.js",
-  "/_app/chunks/Card-96ab9b6a.js",
+  "/_app/pages/404.svelte-56df4f51.js",
+  "/_app/chunks/index-6a56b437.js",
+  "/_app/chunks/Card-f53b5f2a.js",
   "/_app/assets/Card-99362918.css"
 ];
 const files = [
@@ -42,18 +42,22 @@ const ASSETS = `cache${timestamp}`;
 const to_cache = build.concat(files);
 const staticAssets = new Set(to_cache);
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(ASSETS).then((cache) => cache.addAll(to_cache)).then(() => {
-    self.skipWaiting();
-  }));
+  event.waitUntil(
+    caches.open(ASSETS).then((cache) => cache.addAll(to_cache)).then(() => {
+      self.skipWaiting();
+    })
+  );
 });
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then(async (keys) => {
-    for (const key of keys) {
-      if (key !== ASSETS)
-        await caches.delete(key);
-    }
-    self.clients.claim();
-  }));
+  event.waitUntil(
+    caches.keys().then(async (keys) => {
+      for (const key of keys) {
+        if (key !== ASSETS)
+          await caches.delete(key);
+      }
+      self.clients.claim();
+    })
+  );
 });
 async function fetchAndCache(request) {
   const cache = await caches.open(`offline${timestamp}`);
@@ -77,9 +81,11 @@ self.addEventListener("fetch", (event) => {
   const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname);
   const skipBecauseUncached = event.request.cache === "only-if-cached" && !isStaticAsset;
   if (isHttp && !isDevServerRequest && !skipBecauseUncached) {
-    event.respondWith((async () => {
-      const cachedAsset = isStaticAsset && await caches.match(event.request);
-      return cachedAsset || fetchAndCache(event.request);
-    })());
+    event.respondWith(
+      (async () => {
+        const cachedAsset = isStaticAsset && await caches.match(event.request);
+        return cachedAsset || fetchAndCache(event.request);
+      })()
+    );
   }
 });

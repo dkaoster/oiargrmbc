@@ -33,7 +33,7 @@
     "@rollup/plugin-url": "^5.0.0",
     "@sveltejs/adapter-static": "^1.0.0-next.21",
     "@sveltejs/kit": "^1.0.0-next.201",
-    "d3": "^6.2.0",
+    "d3": "^7.6.1",
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-import-resolver-alias": "^1.1.2",

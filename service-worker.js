@@ -1,12 +1,12 @@
-const timestamp = 1668357085903;
+const timestamp = 1670447522405;
 const build = [
-  "/_app/start-23bfd81d.js",
+  "/_app/start-2624d4ea.js",
   "/_app/assets/start-61d1577b.css",
   "/_app/pages/__layout.svelte-b25dd116.js",
   "/_app/assets/pages/__layout.svelte-ce682301.css",
   "/_app/pages/__error.svelte-83341b87.js",
-  "/_app/assets/pages/404.svelte-d811a77f.css",
-  "/_app/pages/index.svelte-53d3d92b.js",
+  "/_app/assets/pages/__error.svelte-217c36c1.css",
+  "/_app/pages/index.svelte-e3ed9381.js",
   "/_app/assets/pages/index.svelte-2188ea1d.css",
   "/_app/pages/letters.svelte-7319d17b.js",
   "/_app/assets/pages/letters.svelte-1b0fd4f2.css",
